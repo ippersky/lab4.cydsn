@@ -55,4 +55,8 @@ build/Release
 codegentemp
 Generated_Source
 CortexM4
+<<<<<<< Updated upstream
 CortexM0P
+=======
+CortexM0P
+>>>>>>> Stashed changes
