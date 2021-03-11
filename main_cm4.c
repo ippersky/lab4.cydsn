@@ -16,7 +16,19 @@
 #include "params.h"
 #include "queue.h"
 
-volatile SemaphoreHandle_t bouton_semph;
+SemaphoreHandle_t bouton_semph = 0;
+
+task_params_t task_A = {
+    .delay = 1000,
+    .message = "Tache A en cours\n\r"
+};
+
+task_params_t task_B = {
+    .delay = 000,
+    .message = "Tache B en cours\n\r"
+};
+
+
 
 void vLedTask(void *arg){
     for(;;){
@@ -34,32 +46,42 @@ void isr_bouton(void){
 }
 
 void bouton_task(){
-    xSemaphoreTake(bouton_semph);
-    vTaskDelay(pdMS_TO_TICKS(20));
-    
-    
-    
-    
+    if(xSemaphoreTake(bouton_semph, portMAX_DELAY)){
+        vTaskDelay(pdMS_TO_TICKS(20));
+        Cy_SCB_UART_PutString(UART_1_HW, "Bouton appuye");
+    }
+    Cy_SCB_UART_PutString(UART_1_HW, "Bouton relache");
 }
 
+void print_loop(void* params){
+    
+    // Cy_SCB_UART_PutString(UART_1_HW, params.message);
+    
+}
 
 int main(void)
 {
     __enable_irq(); /* Enable global interrupts. */
+   
+    
+    // Partie 1
+    xTaskCreate(vLedTask, "Led Task", 400, NULL, 0, NULL);
+    
+    // Partie 2
+    UART_1_Start();
+    
+    bouton_semph = xSemaphoreCreateBinary();
+    
     Cy_SysInt_Init(&Bouton_ISR_cfg, isr_bouton);
     NVIC_ClearPendingIRQ(Bouton_ISR_cfg.intrSrc);
     NVIC_EnableIRQ(Bouton_ISR_cfg.intrSrc);
-        
     
-    // Partie 1
-    xTaskCreate(vLedTask, "Led Task", 400, NULL, 1, NULL);
-    vTaskStartScheduler(); 
+    xTaskCreate(bouton_task, "bouton Task", 1000, NULL, 1, NULL);
+    vTaskStartScheduler();
     
-    // Partie 2
+    // vTaskList(buff);
     
-    
-    
-    
+    // vSemaphoreCreateBinary(bouton_semph);
     
 
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
