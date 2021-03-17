@@ -16,7 +16,8 @@
 #include "params.h"
 #include "queue.h"
 
-SemaphoreHandle_t bouton_semph = 0;
+volatile SemaphoreHandle_t bouton_semph;
+volatile uint8_t flag = 0;
 
 task_params_t task_A = {
     .delay = 1000,
@@ -43,14 +44,20 @@ void isr_bouton(void){
     xSemaphoreGiveFromISR(bouton_semph, NULL);
     Cy_GPIO_ClearInterrupt(Bouton_0_PORT, Bouton_0_NUM);
     NVIC_ClearPendingIRQ(Bouton_ISR_cfg.intrSrc);
+    // xSemaphoreGiveFromISR(bouton_semph, NULL);
 }
 
 void bouton_task(){
-    if(xSemaphoreTake(bouton_semph, portMAX_DELAY)){
+    for(;;){    
+    if(xSemaphoreTake(bouton_semph, portMAX_DELAY) == pdTRUE){
         vTaskDelay(pdMS_TO_TICKS(20));
         Cy_SCB_UART_PutString(UART_1_HW, "Bouton appuye");
+        xSemaphoreGive(bouton_semph);
     }
-    Cy_SCB_UART_PutString(UART_1_HW, "Bouton relache");
+    else{
+        Cy_SCB_UART_PutString(UART_1_HW, "Bouton relache");
+    }
+    }
 }
 
 void print_loop(void* params){
@@ -61,33 +68,37 @@ void print_loop(void* params){
 
 int main(void)
 {
+    bouton_semph = xSemaphoreCreateBinary();
+    
     __enable_irq(); /* Enable global interrupts. */
+    
    
+    Cy_SysInt_Init(&Bouton_ISR_cfg, isr_bouton);
+    NVIC_ClearPendingIRQ(Bouton_ISR_cfg.intrSrc);
+    NVIC_EnableIRQ(Bouton_ISR_cfg.intrSrc);
+    
+    UART_1_Start();
     
     // Partie 1
     xTaskCreate(vLedTask, "Led Task", 400, NULL, 0, NULL);
     
     // Partie 2
-    UART_1_Start();
     
-    bouton_semph = xSemaphoreCreateBinary();
     
-    Cy_SysInt_Init(&Bouton_ISR_cfg, isr_bouton);
-    NVIC_ClearPendingIRQ(Bouton_ISR_cfg.intrSrc);
-    NVIC_EnableIRQ(Bouton_ISR_cfg.intrSrc);
-    
-    xTaskCreate(bouton_task, "bouton Task", 1000, NULL, 1, NULL);
+    xTaskCreate(bouton_task, "bouton Task", 1024, NULL, 1, NULL);
     vTaskStartScheduler();
     
     // vTaskList(buff);
     
     // vSemaphoreCreateBinary(bouton_semph);
     
+    
 
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
     for(;;)
     {
         /* Place your application code here. */
+        
     }
 }
 
