@@ -54,7 +54,7 @@ void bouton_task(){
         if(xSemaphoreTake(bouton_semph, portMAX_DELAY) == pdTRUE){
             vTaskDelay(pdMS_TO_TICKS(20));
             Cy_SCB_UART_PutString(UART_1_HW, "Bouton appuye");
-            xSemaphoreGive(bouton_semph);
+            // xSemaphoreGive(bouton_semph);
         }
         else{
             Cy_SCB_UART_PutString(UART_1_HW, "Bouton relache");
@@ -62,9 +62,9 @@ void bouton_task(){
     }
 }
 
-void print_loop(void* params){
-    
-    // Cy_SCB_UART_PutString(UART_1_HW, params.message);
+void print_loop(task_params_t * params){ // void * ???
+    vTaskDelay(params->delay);
+    Cy_SCB_UART_PutString(UART_1_HW, params->message);
     
 }
 
@@ -78,6 +78,7 @@ int main(void)
     Cy_SysInt_Init(&Bouton_ISR_cfg, isr_bouton);
     NVIC_ClearPendingIRQ(Bouton_ISR_cfg.intrSrc);
     NVIC_EnableIRQ(Bouton_ISR_cfg.intrSrc);
+   
     
     UART_1_Start();
     Cy_SCB_UART_ClearRxFifo(UART_1_HW);
@@ -89,8 +90,14 @@ int main(void)
     
     
     xTaskCreate(bouton_task, "bouton Task", 1024, NULL, 1, NULL);
-    vTaskStartScheduler();
     
+    
+    // Partie 3
+    
+    xTaskCreate(print_loop, "task A", configMINIMAL_STACK_SIZE, (void *) &task_A, 1, NULL);
+    xTaskCreate(print_loop, "task B", configMINIMAL_STACK_SIZE, (void *) &task_B, 1, NULL);
+    
+    vTaskStartScheduler();
     // vTaskList(buff);
     
     // vSemaphoreCreateBinary(bouton_semph);
