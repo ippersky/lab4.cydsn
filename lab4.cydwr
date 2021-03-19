@@ -5,11 +5,29 @@
   </Group>
   <Data key="DataVersionKey" value="2" />
   <Group key="DWRInstGuidMapping">
+    <Group key="Interrupt">
+      <Data key="818dab76-364e-4157-b9b0-82180f3dccb3" value="Bouton_ISR" />
+      <Data key="f95c3b6a-055b-4cbc-bd0a-fa943d99b941/9260d369-b684-4310-b925-f618d77b89d7" value="UART_1_SCB_IRQ" />
+    </Group>
     <Group key="Pin">
       <Data key="4cca878b-77b5-471d-8aeb-ad6925202455" value="Pin_1" />
       <Data key="a61270bc-07ec-447d-ac9e-34cfe85c30e9" value="LED" />
       <Data key="f95c3b6a-055b-4cbc-bd0a-fa943d99b941/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f" value="UART_1_tx" />
       <Data key="f95c3b6a-055b-4cbc-bd0a-fa943d99b941/b7e8018e-1ef7-49c0-b5a5-61641a03e31c" value="UART_1_rx" />
+    </Group>
+  </Group>
+  <Group key="Interrupt">
+    <Group key="818dab76-364e-4157-b9b0-82180f3dccb3">
+      <Group key="CortexM0p">
+        <Data key="Assigned" value="False" />
+        <Data key="Priority" value="Default" />
+        <Data key="Vector" value="3" />
+      </Group>
+      <Group key="CortexM4">
+        <Data key="Assigned" value="True" />
+        <Data key="Priority" value="Default" />
+        <Data key="Vector" value="-1" />
+      </Group>
     </Group>
   </Group>
   <Group key="M0S8Clock">

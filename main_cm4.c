@@ -41,6 +41,7 @@ void vLedTask(void *arg){
 }
 
 void isr_bouton(void){
+    flag = 1;
     xSemaphoreGiveFromISR(bouton_semph, NULL);
     Cy_GPIO_ClearInterrupt(Bouton_0_PORT, Bouton_0_NUM);
     NVIC_ClearPendingIRQ(Bouton_ISR_cfg.intrSrc);
@@ -48,15 +49,16 @@ void isr_bouton(void){
 }
 
 void bouton_task(){
+    
     for(;;){    
-    if(xSemaphoreTake(bouton_semph, portMAX_DELAY) == pdTRUE){
-        vTaskDelay(pdMS_TO_TICKS(20));
-        Cy_SCB_UART_PutString(UART_1_HW, "Bouton appuye");
-        xSemaphoreGive(bouton_semph);
-    }
-    else{
-        Cy_SCB_UART_PutString(UART_1_HW, "Bouton relache");
-    }
+        if(xSemaphoreTake(bouton_semph, portMAX_DELAY) == pdTRUE){
+            vTaskDelay(pdMS_TO_TICKS(20));
+            Cy_SCB_UART_PutString(UART_1_HW, "Bouton appuye");
+            xSemaphoreGive(bouton_semph);
+        }
+        else{
+            Cy_SCB_UART_PutString(UART_1_HW, "Bouton relache");
+        }
     }
 }
 
@@ -78,6 +80,7 @@ int main(void)
     NVIC_EnableIRQ(Bouton_ISR_cfg.intrSrc);
     
     UART_1_Start();
+    Cy_SCB_UART_ClearRxFifo(UART_1_HW);
     
     // Partie 1
     xTaskCreate(vLedTask, "Led Task", 400, NULL, 0, NULL);
@@ -98,7 +101,9 @@ int main(void)
     for(;;)
     {
         /* Place your application code here. */
-        
+        if(flag == 1){
+            flag = 0; 
+        }
     }
 }
 
