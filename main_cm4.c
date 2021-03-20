@@ -48,7 +48,7 @@ void isr_bouton(void){
     // xSemaphoreGiveFromISR(bouton_semph, NULL);
 }
 
-void bouton_task(){
+void bouton_task(void *arg){
     
     for(;;){    
         if(xSemaphoreTake(bouton_semph, portMAX_DELAY) == pdTRUE){
@@ -62,9 +62,11 @@ void bouton_task(){
     }
 }
 
-void print_loop(task_params_t * params){ // void * ???
+void print_loop(void * data){
+    task_params_t * params = (task_params_t *)data;
     vTaskDelay(params->delay);
     Cy_SCB_UART_PutString(UART_1_HW, params->message);
+    //struct s_data *data = (struct s_data *)params;
     
 }
 
