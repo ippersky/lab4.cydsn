@@ -1,5 +1,5 @@
 # lab4
-# 2021-03-19 22:07:08Z
+# 2021-03-23 22:30:42Z
 
 dont_use_location p4usbcell -1 -1 0
 dont_use_location USB -1 -1 0
@@ -11,4 +11,3 @@ set_io "LED(0)" iocell 1 1
 set_io "\UART_1:tx(0)\" iocell 5 1
 set_io "\UART_1:rx(0)\" iocell 5 0
 set_io "Bouton(0)" iocell 0 4
-set_location "SRSS" SRSS -1 -1 0

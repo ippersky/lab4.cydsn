@@ -1,5 +1,5 @@
 -- Project:   lab4
--- Generated: 03/19/2021 18:07:08
+-- Generated: 03/23/2021 18:30:42
 -- PSoC Creator  4.4
 
 ENTITY lab4 IS
@@ -47,10 +47,10 @@ ARCHITECTURE __DEFAULT__ OF lab4 IS
     ATTRIBUTE global_signal OF ClockBlock_PeriClk : SIGNAL IS true;
     SIGNAL ClockBlock_SlowClk : bit;
     SIGNAL ClockBlock_WCO : bit;
+    SIGNAL INDIVIDUAL_PICU_OUT_0 : bit;
     SIGNAL LED(0)__PA : bit;
     SIGNAL Net_10 : bit;
     SIGNAL Net_11 : bit;
-    SIGNAL PM_INT_OUT : bit;
     SIGNAL \UART_1:Net_1172\ : bit;
     SIGNAL \UART_1:Net_161\ : bit;
     SIGNAL \UART_1:Net_847_ff0\ : bit;
@@ -82,7 +82,6 @@ ARCHITECTURE __DEFAULT__ OF lab4 IS
     ATTRIBUTE Location OF \UART_1:rx(0)\ : LABEL IS "P5[0]";
     ATTRIBUTE lib_model OF Bouton(0) : LABEL IS "iocell6";
     ATTRIBUTE Location OF Bouton(0) : LABEL IS "P0[4]";
-    ATTRIBUTE Location OF SRSS : LABEL IS "F(SRSS,0)";
     COMPONENT CLK_GEN
         PORT (
             gen_clk_in_0 : IN std_ulogic;
@@ -401,6 +400,26 @@ ARCHITECTURE __DEFAULT__ OF lab4 IS
             out_clock_en : IN std_ulogic;
             out_reset : IN std_ulogic);
     END COMPONENT;
+    COMPONENT IOSS
+        PORT (
+            interrupt_gpio : OUT std_ulogic;
+            interrupt_vdd : OUT std_ulogic;
+            interrupt_port_0 : OUT std_ulogic;
+            interrupt_port_1 : OUT std_ulogic;
+            interrupt_port_2 : OUT std_ulogic;
+            interrupt_port_3 : OUT std_ulogic;
+            interrupt_port_4 : OUT std_ulogic;
+            interrupt_port_5 : OUT std_ulogic;
+            interrupt_port_6 : OUT std_ulogic;
+            interrupt_port_7 : OUT std_ulogic;
+            interrupt_port_8 : OUT std_ulogic;
+            interrupt_port_9 : OUT std_ulogic;
+            interrupt_port_10 : OUT std_ulogic;
+            interrupt_port_11 : OUT std_ulogic;
+            interrupt_port_12 : OUT std_ulogic;
+            interrupt_port_13 : OUT std_ulogic;
+            interrupt_port_14 : OUT std_ulogic);
+    END COMPONENT;
     COMPONENT logicalport
         PORT (
             interrupt : OUT std_ulogic;
@@ -432,22 +451,6 @@ ARCHITECTURE __DEFAULT__ OF lab4 IS
             tr_tx_req : OUT std_ulogic;
             tr_rx_req : OUT std_ulogic;
             tr_i2c_scl_filtered : OUT std_ulogic);
-    END COMPONENT;
-    COMPONENT SRSS
-        PORT (
-            clock_timer : IN std_ulogic;
-            interrupt_mcwdt_0 : OUT std_ulogic;
-            interrupt_mcwdt_1 : OUT std_ulogic;
-            interrupt_backup : OUT std_ulogic;
-            interrupt : OUT std_ulogic;
-            ext_clk : IN std_ulogic;
-            clk_ext : OUT std_ulogic;
-            swd_data : IN std_ulogic;
-            swd_clk : IN std_ulogic;
-            xres_n : IN std_ulogic;
-            pmic_wakeup_in : IN std_ulogic;
-            pmic_wakeup_out : OUT std_ulogic;
-            hibernate_wakeup : IN std_ulogic);
     END COMPONENT;
 BEGIN
 
@@ -844,11 +847,11 @@ BEGIN
             deepsleep_required => 0,
             int_type => "10")
         PORT MAP(
-            interrupt => PM_INT_OUT,
+            interrupt => INDIVIDUAL_PICU_OUT_0,
             clock => ClockBlock_PeriClk);
 
-    SRSS:SRSS
+    IOSS:IOSS
         PORT MAP(
-            interrupt => PM_INT_OUT);
+            interrupt_port_0 => INDIVIDUAL_PICU_OUT_0);
 
 END __DEFAULT__;

@@ -25,7 +25,7 @@ task_params_t task_A = {
 };
 
 task_params_t task_B = {
-    .delay = 000,
+    .delay = 999,
     .message = "Tache B en cours\n\r"
 };
 
@@ -41,37 +41,32 @@ void vLedTask(void *arg){
 }
 
 void isr_bouton(void){
-    flag = 1;
     xSemaphoreGiveFromISR(bouton_semph, NULL);
     Cy_GPIO_ClearInterrupt(Bouton_0_PORT, Bouton_0_NUM);
     NVIC_ClearPendingIRQ(Bouton_ISR_cfg.intrSrc);
-    // xSemaphoreGiveFromISR(bouton_semph, NULL);
 }
 
 void bouton_task(void *arg){
     
-    for(;;){    
+    for(;;){
+        Cy_SCB_UART_PutString(UART_1_HW, "Bouton relache\n\r");
         if(xSemaphoreTake(bouton_semph, portMAX_DELAY) == pdTRUE){
+            Cy_SCB_UART_PutString(UART_1_HW, "Bouton appuye\n\r");
             vTaskDelay(pdMS_TO_TICKS(20));
-            Cy_SCB_UART_PutString(UART_1_HW, "Bouton appuye");
-            // xSemaphoreGive(bouton_semph);
         }
-        else{
-            Cy_SCB_UART_PutString(UART_1_HW, "Bouton relache");
-        }
+
     }
 }
 
-void print_loop(void * data){
+void print_loop(void * data) {
     task_params_t * params = (task_params_t *)data;
-    vTaskDelay(params->delay);
-    Cy_SCB_UART_PutString(UART_1_HW, params->message);
-    //struct s_data *data = (struct s_data *)params;
-    
+    for(;;){
+        vTaskDelay(params->delay);
+        Cy_SCB_UART_PutString(UART_1_HW, params->message);
+    }
 }
 
-int main(void)
-{
+int main(void){
     bouton_semph = xSemaphoreCreateBinary();
     
     __enable_irq(); /* Enable global interrupts. */
@@ -100,20 +95,9 @@ int main(void)
     xTaskCreate(print_loop, "task B", configMINIMAL_STACK_SIZE, (void *) &task_B, 1, NULL);
     
     vTaskStartScheduler();
-    // vTaskList(buff);
-    
-    // vSemaphoreCreateBinary(bouton_semph);
     
     
-
-    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
-    for(;;)
-    {
-        /* Place your application code here. */
-        if(flag == 1){
-            flag = 0; 
-        }
+    for(;;){
     }
-}
 
-/* [] END OF FILE */
+}

@@ -1,6 +1,6 @@
 // ======================================================================
 // lab4.v generated from TopDesign.cysch
-// 03/19/2021 at 18:06
+// 03/23/2021 at 18:30
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -448,7 +448,7 @@ module top ;
 
 
 	cy_gsref_v1_0
-		#(.guid("F6FE8012-9DE3-4570-93F9-DA5FFB29BBD9"))
+		#(.guid("8C3B410E-0600-5ECF-95DD-0AF91BF8D8A7"))
 		GlobalSignal_1
 		 (.sig_out(Net_18));
 

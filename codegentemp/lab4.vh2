@@ -2,7 +2,7 @@
 --	Conversion of lab4.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Fri Mar 19 18:06:54 2021
+--	Tue Mar 23 18:30:26 2021
 --
 
 USE cypress.cypress.all;
@@ -234,7 +234,7 @@ Bouton:cy_mxs40_gpio_v1_0
 		annotation=>(open),
 		siovref=>(tmpSIOVREF__Bouton_net_0));
 GlobalSignal_1:cy_gsref_v1_0
-	GENERIC MAP(guid=>"F6FE8012-9DE3-4570-93F9-DA5FFB29BBD9")
+	GENERIC MAP(guid=>"8C3B410E-0600-5ECF-95DD-0AF91BF8D8A7")
 	PORT MAP(sig_out=>Net_18);
 
 END R_T_L;
