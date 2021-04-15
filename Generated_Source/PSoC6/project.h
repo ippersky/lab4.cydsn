@@ -102,8 +102,20 @@
 #include "cyfitter_gpio.h"
 #include "cyfitter_sysint.h"
 #include "cydisabledsheets.h"
-#include "UART_1.h"
-#include "UART_1_SCBCLK.h"
+#include "CapSense_1.h"
+#include "CapSense_1_Control.h"
+#include "CapSense_1_Filter.h"
+#include "CapSense_1_Processing.h"
+#include "CapSense_1_Sensing.h"
+#include "CapSense_1_Structure.h"
+#include "CapSense_1_Tuner.h"
+#include "CapSense_1_Configuration.h"
+#include "CapSense_1_SensingCSD_LL.h"
+#include "CapSense_1_RegisterMap.h"
+#include "CapSense_1_SmartSense_LL.h"
+#include "I2C_1.h"
+#include "CapSense_1_ModClk.h"
+#include "I2C_1_SCBCLK.h"
 
 /*[]*/
 

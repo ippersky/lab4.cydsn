@@ -96,6 +96,10 @@ int main(void){
     
     vTaskStartScheduler();
     
+    // Test
+    I2C_1_Start;
+    CapSense_1_Start;
+    
     
     for(;;){
     }
