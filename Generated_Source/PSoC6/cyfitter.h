@@ -20,20 +20,38 @@
 #include "cyfitter_gpio.h"
 #include "cyfitter_sysint.h"
 
-/* UART_1_SCB */
-#define UART_1_SCB__HW SCB5
-#define UART_1_SCB__IDX 5
-#define UART_1_SCB__SS0_POSITION 0u
-#define UART_1_SCB__SS1_POSITION 1u
-#define UART_1_SCB__SS2_POSITION 2u
-#define UART_1_SCB__SS3_POSITION 3u
+/* I2C_1_SCB */
+#define I2C_1_SCB__HW SCB5
+#define I2C_1_SCB__IDX 5
+#define I2C_1_SCB__SS0_POSITION 0u
+#define I2C_1_SCB__SS1_POSITION 1u
+#define I2C_1_SCB__SS2_POSITION 2u
+#define I2C_1_SCB__SS3_POSITION 3u
 
-/* UART_1_SCBCLK */
-#define UART_1_SCBCLK__DIV_IDX 0
-#define UART_1_SCBCLK__DIV_NUM 0
-#define UART_1_SCBCLK__DIV_TYPE CY_SYSCLK_DIV_8_BIT
+/* I2C_1_SCBCLK */
+#define I2C_1_SCBCLK__DIV_IDX 1
+#define I2C_1_SCBCLK__DIV_NUM 1
+#define I2C_1_SCBCLK__DIV_TYPE CY_SYSCLK_DIV_8_BIT
+
+/* CapSense_1_CSD */
+#define CapSense_1_CSD__CMOD_PAD 1u
+#define CapSense_1_CSD__CSH_TANK_PAD 2u
+#define CapSense_1_CSD__CSHIELD_PAD 4u
+#define CapSense_1_CSD__DEDICATED_IO0 CapSense_1_CSD__CMOD_PAD
+#define CapSense_1_CSD__HW CSD0
+#define CapSense_1_CSD__IDX 0
+#define CapSense_1_CSD__VREF_EXT_PAD 8u
+
+/* CapSense_1_IDACComp */
+#define CapSense_1_IDACComp__HW CSD0
+#define CapSense_1_IDACComp__IDX 1
 
 /* Miscellaneous */
+#define CapSense_1_IDACMod__HW CSD0
+#define CapSense_1_IDACMod__IDX 0
+#define CapSense_1_ModClk__DIV_IDX 0
+#define CapSense_1_ModClk__DIV_NUM 0
+#define CapSense_1_ModClk__DIV_TYPE CY_SYSCLK_DIV_8_BIT
 #define CPUSS__CTI_TR_IN_0 TRIG5_OUT_CPUSS_CTI_TR_IN0
 #define CPUSS__CTI_TR_IN_1 TRIG5_OUT_CPUSS_CTI_TR_IN1
 #define CY_CPUSS_SWJ_SWCLK_TCLK_0_DRIVEMODE CY_GPIO_DM_PULLDOWN

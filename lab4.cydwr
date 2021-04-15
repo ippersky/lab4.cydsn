@@ -10,7 +10,11 @@
       <Data key="f95c3b6a-055b-4cbc-bd0a-fa943d99b941/9260d369-b684-4310-b925-f618d77b89d7" value="UART_1_SCB_IRQ" />
     </Group>
     <Group key="Pin">
-      <Data key="4cca878b-77b5-471d-8aeb-ad6925202455" value="Pin_1" />
+      <Data key="4cca878b-77b5-471d-8aeb-ad6925202455" value="Bouton" />
+      <Data key="4f494de5-d5de-44a8-a102-125a38b26cf0/2aab8a93-e7dd-4bd4-8210-42652cd079c5" value="I2C_1_sda" />
+      <Data key="4f494de5-d5de-44a8-a102-125a38b26cf0/69c3b5e8-b094-4d65-b96b-9f4f3a9a8641" value="I2C_1_scl" />
+      <Data key="9d460162-af4f-4f3a-a05a-307a37bff5fe/4db2e9d3-9f70-4f4e-a919-7eefada41863" value="CapSense_1_Cmod" />
+      <Data key="9d460162-af4f-4f3a-a05a-307a37bff5fe/0113321b-4a37-46f6-8407-2f8646c68756" value="CapSense_1_Sns" />
       <Data key="a61270bc-07ec-447d-ac9e-34cfe85c30e9" value="LED" />
       <Data key="f95c3b6a-055b-4cbc-bd0a-fa943d99b941/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f" value="UART_1_tx" />
       <Data key="f95c3b6a-055b-4cbc-bd0a-fa943d99b941/b7e8018e-1ef7-49c0-b5a5-61641a03e31c" value="UART_1_rx" />
@@ -618,6 +622,26 @@
     <Group key="4cca878b-77b5-471d-8aeb-ad6925202455">
       <Group key="0">
         <Data key="Port Format" value="0,4" />
+      </Group>
+    </Group>
+    <Group key="4f494de5-d5de-44a8-a102-125a38b26cf0/2aab8a93-e7dd-4bd4-8210-42652cd079c5">
+      <Group key="0">
+        <Data key="Port Format" value="5,1" />
+      </Group>
+    </Group>
+    <Group key="4f494de5-d5de-44a8-a102-125a38b26cf0/69c3b5e8-b094-4d65-b96b-9f4f3a9a8641">
+      <Group key="0">
+        <Data key="Port Format" value="5,0" />
+      </Group>
+    </Group>
+    <Group key="9d460162-af4f-4f3a-a05a-307a37bff5fe/4db2e9d3-9f70-4f4e-a919-7eefada41863">
+      <Group key="0">
+        <Data key="Port Format" value="7,1" />
+      </Group>
+    </Group>
+    <Group key="9d460162-af4f-4f3a-a05a-307a37bff5fe/0113321b-4a37-46f6-8407-2f8646c68756">
+      <Group key="0">
+        <Data key="Port Format" value="7,0" />
       </Group>
     </Group>
     <Group key="a61270bc-07ec-447d-ac9e-34cfe85c30e9">
