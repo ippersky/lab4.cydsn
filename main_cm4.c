@@ -17,6 +17,7 @@
 #include "queue.h"
 
 volatile SemaphoreHandle_t bouton_semph;
+volative QueueHandle_t queue;
 volatile uint8_t flag = 0;
 
 task_params_t task_A = {
@@ -68,6 +69,7 @@ void print_loop(void * data) {
 
 int main(void){
     bouton_semph = xSemaphoreCreateBinary();
+    queue = xQueueCreate();
     
     __enable_irq(); /* Enable global interrupts. */
     
@@ -76,8 +78,10 @@ int main(void){
     NVIC_ClearPendingIRQ(Bouton_ISR_cfg.intrSrc);
     NVIC_EnableIRQ(Bouton_ISR_cfg.intrSrc);
    
+    // Test
+    I2C_1_Start;
+    CapSense_1_Start;
     
-    UART_1_Start();
     Cy_SCB_UART_ClearRxFifo(UART_1_HW);
     
     // Partie 1
@@ -91,14 +95,11 @@ int main(void){
     
     // Partie 3
     
-    xTaskCreate(print_loop, "task A", configMINIMAL_STACK_SIZE, (void *) &task_A, 1, NULL);
     xTaskCreate(print_loop, "task B", configMINIMAL_STACK_SIZE, (void *) &task_B, 1, NULL);
     
     vTaskStartScheduler();
     
-    // Test
-    I2C_1_Start;
-    CapSense_1_Start;
+    
     
     
     for(;;){
